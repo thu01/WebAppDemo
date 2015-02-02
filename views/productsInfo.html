@@ -1,0 +1,11 @@
+<div class="container" ng-controller='productInfoCtrl'>
+    <table ng-table='ngTableProducts' class="table">
+    <tr ng-repeat="info in $data">
+        <td data-title="'Product Name'" header-class="text-left">{{info.product_name}}</td>
+        <td data-title="'Price'" header-class="text-left">{{info.product_price}}</td>
+        <td data-title="'Type'" header-class="text-left">{{info.product_type}}</td>
+        <td data-title="'Description'" header-class="text-left">{{info.product_description}}</td>
+    </tr>
+    </table>
+</div>
+

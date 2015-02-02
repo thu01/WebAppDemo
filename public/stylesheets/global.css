@@ -1,0 +1,73 @@
+body {
+	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    //padding-top: 70px; 
+}
+
+.navbar-inverse {
+    background-color: #428BCA;
+    border-color: transparent;
+}
+
+.navbar-inverse .navbar-brand
+{
+    color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-brand:hover 
+{
+    color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav > li > a 
+{
+    color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, 
+.navbar-inverse .navbar-nav > li > a:focus 
+{
+    color: #FFFFFF;
+    border-bottom: 3px solid white;
+}
+
+.key-content
+{
+	margin-top: 20px;
+}
+
+.feature-content {
+    margin-bottom: 30px;
+}
+
+footer {
+    margin: 50px 0;
+
+}
+
+.ng-table 
+{
+    margin-top: 20px;
+    border: 1px solid #000;
+}
+
+.ng-table th.text-right
+{
+    text-align: right;
+}
+.ng-table th.text-left 
+{
+    text-align: left;
+}
+
+.login-modal-window .modal-dialog {
+  width: 425px;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.nav .dropdown-menu a{
+    color: #428BCA;
+    //border-color: transparent;
+}
