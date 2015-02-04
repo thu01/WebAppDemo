@@ -18,7 +18,7 @@
                                ng-model="user.email"
                                required
                                autofocus
-                               mongoose-error>
+                               mongoose-error />
                         <p class="help-block"
                            ng-show="form.email.$error.mongoose">
                             {{ errors.email }}
@@ -32,7 +32,7 @@
                                id="password"
                                ng-model="user.password"
                                required
-                               mongoose-error>
+                               mongoose-error />
                         <p class="help-block" ng-show="form.password.$error.mongoose">
                             {{ errors.password }}
                         </p>
@@ -58,15 +58,67 @@
                 </fieldset>
             </form>
             
-            <form role="form" ng-show="page_name=='signup-page'">
+            <form role="form"
+                  ng-submit="signup(form)" 
+                  ng-show="page_name=='signup-page'">
                 <fieldset>
                     <h2>Please Sign Up</h2>
                     <hr class="colorgraph">
-                    <div class="form-group">
-                        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address">
+                    <div class="form-group" ng-class="{'has-error': form.user_email.$error.mongoose}">
+                        <input type="user_email" 
+                               name="user_email"
+                               placeholder="Email" 
+                               class="form-control input-lg"
+                               ng-model="user.user_email"
+                               required
+                               autofocus
+                               mongoose-error />
+                         <p class="help-block"
+                            ng-show="form.user_email.$error.email && !form.user_email.$focused">
+                                Not a valid email.
+                        </p>
+                        <p class="help-block"
+                           ng-show="form.user_email.$error.mongoose">
+                                {{ errors.email }}
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password">
+                    <div class="form-group" ng-class="{'has-error': form.user_name.$error.mongoose}">
+                    <input class="form-control input-lg"
+                           placeholder="Username"
+                           type="user_name"
+                           name="user_name"
+                           ng-model="user.user_name"
+                           required
+                           unique-username
+                           mongoose-error />
+                    <p class="help-block"
+                       ng-show="form.user_name.$error.unique && form.user_name">
+                        That username is already taken.
+                    </p>
+                    <p class="help-block"
+                       ng-show="form.password.$error.mongoose">
+                        {{ errors.user_name }}
+                    </p>
+                </div>
+                    <div class="form-group" ng-class="{'has-error': form.password.$error.mongoose}">
+                        <input type="password" 
+                               name="password"
+                               placeholder="Password" 
+                               id="password"
+                               ng-model="user.password"
+                               ng-minlength="5" 
+                               class="form-control input-lg" 
+                               required
+                               mongoose-error />
+                        <p class="help-block"
+                            ng-show="(form.password.$error.minlength || form.password.$invalid)
+                                && form.password.$dirty && !form.password.$error.required">
+                                Password must be at least 5 characters.
+                        </p>
+                        <p class="help-block"
+                            ng-show="form.password.$error.mongoose">
+                            {{ errors.password }}
+                        </p>
                     </div>
                     <hr class="colorgraph">
                     <div class="row">

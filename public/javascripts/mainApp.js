@@ -340,6 +340,32 @@ function($scope, $modalInstance, Auth, $location){
         });
     };
 
+    $scope.signup = function(form) {
+        //console.log("Auth signup");
+        Auth.createUser({
+          'user_email': $scope.user.user_email,
+          'user_name': $scope.user.user_name,
+          'user_password': $scope.user.user_password
+        },
+        function(err) {
+          $scope.errors = {};
+
+          if (!err) {
+            //TODO: Redirect to a new page
+            $modalInstance.dismiss('cancel');
+            $location.path('/moments');
+            //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
+          } else {
+            angular.forEach(err.errors, function(error, field) {
+              console.log("field: " + field);
+              form[field].$setValidity('mongoose', false);
+              $scope.errors[field] = error.type;
+            });
+            $scope.error.other = err.message;
+          }
+        });
+    };
+
 }]);
 
 //Directives
