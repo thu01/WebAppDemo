@@ -121,14 +121,21 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
 
     res.login = function(provider, user, callback) {
         var cb = callback || angular.noop;
-        //console.log(user);
-        Session.save({ 
+        // console.log(user);
+        var userInputs = user;
+        Session.save({
             provider: provider,
             email: user.email,
             password: user.password,
-            rememberMe: user.rememberMe
+            remember_me: user.remember_me
         }, function(user) {
-            //console.log(user);
+            if (userInputs.remember_me) {
+              $cookieStore.put('remember_me', userInputs.remember_me);
+              $cookieStore.put('user_email', userInputs.email);
+              $cookieStore.put('user_password', userInputs.password);
+            } else {
+              $cookieStore.put('remember_me', 0);
+            };
             $rootScope.currentUser = user;
             return cb();
         }, function(err) {
@@ -138,6 +145,7 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
 
     res.logout = function(callback) {
         var cb = callback || angular.noop;
+        // $cookieStore.remove('user');
         Session.delete(function(res) {
             $rootScope.currentUser = null;
             return cb();
@@ -159,6 +167,7 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
 
     res.currentUser = function() {
         Session.get(function(user) {
+            console.log(user);
             $rootScope.currentUser = user;
         });
     };
@@ -285,24 +294,53 @@ mainApp.controller('loginCtrl', [
 '$modalInstance',
 'Auth',
 '$location',
-function($scope, $modalInstance, Auth, $location){
-    $scope.button_remember_me = 0;
+'$cookieStore',
+function($scope, $modalInstance, Auth, $location, $cookieStore){
+    $scope.button_remember_me = $cookieStore.get('remember_me') || 0;
     $scope.page_name = 'login-page';
 
     $scope.error = {};
-    $scope.user = {};
+
+
+    if ($cookieStore.get('remember_me')) {
+      $scope.button_remember_me = $cookieStore.get('remember_me');
+      $scope.user = {
+        'email': $cookieStore.get('user_email'),
+        'password': $cookieStore.get('user_password')
+      };
+    } else {
+      $scope.user = {};
+    }
+
+    (function loginPageOnLoad($cookieStore){
+        console.log('load login');
+        console.log('value' + $scope.button_remember_me);
+        if($scope.button_remember_me)
+        {
+            console.log('remember_me enabled');
+            angular.element(".btn-remember-me").removeClass('btn-default');
+
+            angular.element(".btn-remember-me").addClass('btn-info glyphicon glyphicon-check');
+        }
+        else
+        {
+          console.log('remember_me disabled');
+            angular.element(".btn-remember-me").removeClass('btn-info glyphicon glyphicon-check');
+            angular.element(".btn-remember-me").addClass('btn-default');
+        }
+    })();
 
     $scope.btnRememberMeClick = function()
     {
-        if($scope.button_remember_me==0)
+        if($scope.button_remember_me===0)
         {
-            $scope.button_remember_me=1;
+            $scope.button_remember_me = 1;
             angular.element(".btn-remember-me").removeClass('btn-default');
             angular.element(".btn-remember-me").addClass('btn-info glyphicon glyphicon-check');
         }
         else
         {
-            $scope.button_remember_me=0;
+            $scope.button_remember_me = 0;
             angular.element(".btn-remember-me").removeClass('btn-info glyphicon glyphicon-check');
             angular.element(".btn-remember-me").addClass('btn-default');
         }
@@ -318,10 +356,10 @@ function($scope, $modalInstance, Auth, $location){
         $scope.page_name = pageMapTable[pageKey];
     };
     $scope.login = function(form) {
-        //console.log("Auth login");
         Auth.login('password', {
           'email': $scope.user.email,
-          'password': $scope.user.password
+          'password': $scope.user.password,
+          'remember_me': $scope.button_remember_me
         },
         function(err) {
           $scope.errors = {};
