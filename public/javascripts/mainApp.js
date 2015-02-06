@@ -248,7 +248,10 @@ function($scope, posts, $rootScope){
         mm='0'+mm
       }
       posts.createPost({
-        post_author: $rootScope.currentUser.user_name,
+        post_author: (function () {
+            if ($rootScope.currentUser) {
+              return $rootScope.currentUser.user_name;
+            } else { return 'anonymous' }})(),
         post_date: mm+'/'+dd+'/'+yyyy,
         post_date_time: hour+':'+minute+':'+second,
         post_content: $scope.title
