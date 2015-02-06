@@ -11,7 +11,7 @@ mainApp.config([
     })
     .state('products',{
       url: '/products',
-      templateUrl: 'productsInfo.html',      
+      templateUrl: 'productsInfo.html',
       resolve: {
         postPromise: ['productsInfoFactory', function(productsInfoFactory){
           return productsInfoFactory.getProductsInfo();
@@ -33,7 +33,7 @@ mainApp.config([
     $urlRouterProvider.otherwise('/');
   }]);
 
-mainApp.run(['$rootScope', '$location', 'Auth', 
+mainApp.run(['$rootScope', '$location', 'Auth',
         function ($rootScope, $location, Auth) {
     //watching the value of the currentUser variable.
     $rootScope.$watch('currentUser', function(currentUser) {
@@ -47,7 +47,7 @@ mainApp.run(['$rootScope', '$location', 'Auth',
 }]);
 
 ///Factories
-mainApp.factory('productsInfoFactory', ['$http', function($http){  
+mainApp.factory('productsInfoFactory', ['$http', function($http){
   var res = {
     products: []
   };
@@ -60,7 +60,7 @@ mainApp.factory('productsInfoFactory', ['$http', function($http){
   return res;
 }]);
 
-mainApp.factory('posts', ['$http', function($http){  
+mainApp.factory('posts', ['$http', function($http){
   var o = {
     posts: []
   };
@@ -77,7 +77,7 @@ mainApp.factory('posts', ['$http', function($http){
   return o;
 }]);
 
-mainApp.factory('loginModalFactory', ['$modal','$log', function($modal, $log){  
+mainApp.factory('loginModalFactory', ['$modal','$log', function($modal, $log){
     var res = {
         o: []
         };
@@ -228,7 +228,8 @@ function($scope, ngTableParams, productsInfoFactory){
 mainApp.controller('momentsCtrl',[
 '$scope',
 'posts',
-function($scope, posts){
+'$rootScope',
+function($scope, posts, $rootScope){
 	$scope.posts = posts.posts;
     //TODO: Use session data for user name
   $scope.addPost = function(){
@@ -242,12 +243,12 @@ function($scope, posts){
       var second = today.getSeconds();
       if(dd<10) {
         dd='0'+dd
-      } 
+      }
       if(mm<10) {
         mm='0'+mm
-      } 
+      }
       posts.createPost({
-        post_author: 'anonymous', 
+        post_author: $rootScope.currentUser.user_name,
         post_date: mm+'/'+dd+'/'+yyyy,
         post_date_time: hour+':'+minute+':'+second,
         post_content: $scope.title
