@@ -11,6 +11,8 @@ var mongoose = require('mongoose'),
  * returns: {email, password}
  */
 exports.create = function (req, res, next) {
+  console.log("Users; req = " + req.body);
+  console.dir(req.body);
   var newUser = new User(req.body);
   newUser.provider = 'local';
 

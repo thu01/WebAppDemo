@@ -156,6 +156,7 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
 
     res.createUser = function(userinfo, callback) {
         var cb = callback || angular.noop;
+        console.log("Auth Create User: userinfo = " + angular.toJson(userinfo));
         User.save(userinfo,
             function(user) {
             $rootScope.currentUser = user;

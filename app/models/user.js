@@ -44,6 +44,7 @@ userSchema
  */
 
 var validatePresenceOf = function (value) {
+  console.log("validatePresenceOf; value = " + value);
   return value && value.length;
 };
 
@@ -73,11 +74,11 @@ userSchema.path('user_name').validate(function(value, respond) {
  */
 
 userSchema.pre('save', function(next) {
+
   if (!this.isNew) {
     return next();
   }
-
-  if (!validatePresenceOf(this.password)) {
+  if (!validatePresenceOf(this.user_password)) {
     next(new Error('Invalid password'));
   }
   else {
