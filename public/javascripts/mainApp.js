@@ -263,7 +263,7 @@ function($scope, posts, $rootScope){
 
 
 mainApp.controller('HeaderCtrl', function ($scope, $modal, $log, $location, Auth) {
-
+    $scope.dummy = 3;
     $scope.buttonLoginClick = function (size) {
     var modalInstance = $modal.open({
       templateUrl: 'templates/login.html',
