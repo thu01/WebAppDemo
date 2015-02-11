@@ -40,6 +40,9 @@ module.exports = function(app, passport) {
     app.post('/auth/users', users.create);
     app.get('/auth/users/:userId', users.show);
 
+    // Emails
+    var emails = require('./controllers/emails');
+    app.post('/email', emails.send)
 
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {

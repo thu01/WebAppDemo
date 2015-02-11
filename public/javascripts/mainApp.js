@@ -28,6 +28,14 @@ mainApp.config([
         }]
         },
       controller: 'momentsCtrl'
+    })
+    .state('email',{
+      url: '/email',
+      onEnter: function($http) {
+        $http.post('/email').success(function(){
+          console.log('email sent successfully');
+        })
+      }
     });
 
     $urlRouterProvider.otherwise('/');
@@ -113,6 +121,7 @@ mainApp.factory('User', ['$resource', function ($resource) {
         }
     });
  }]);
+
 
 mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieStore', function ($location, $rootScope, Session, User, $cookieStore){
     $rootScope.currentUser = $cookieStore.get('user') || null;
