@@ -12,7 +12,7 @@ var mg = require('nodemailer-mailgun-transport');
 }
  * return: 200
  */
-exports.send = function (req, res) {
+exports.send = function (req, cb) {
 
     // This is your API key that you retrieve from www.mailgun.com
     var auth = {
@@ -26,12 +26,11 @@ exports.send = function (req, res) {
 
     // NB! No need to recreate the transporter object. You can use
     // the same transporter object for all e-mails
-
     nodemailerMailgun.sendMail({
       from: 'rootndev@gmail.com',
-      to: 'rootndev@gmail.com', // An array if you have multiple recipients.
+      to: req.user_email, // An array if you have multiple recipients.
       subject: 'Hey you, awesome!',
-      text: 'Test!',
+      text: 'Test! This is your new password: ' + req.user_password,
     }, function (err, info) {
       if (err) {
         console.log('Error: ' + err);
@@ -40,5 +39,5 @@ exports.send = function (req, res) {
         console.log('Response: ' + info);
       }
     });
-    res.status(200).json({msg: 'success email.'})
+    cb();
 }

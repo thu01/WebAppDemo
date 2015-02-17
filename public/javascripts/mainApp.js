@@ -196,6 +196,18 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
         });
     };
 
+    res.rstPwd = function(email, callback) {
+        var cb = callback || angular.noop;
+        User.update({
+            user_email: email.user_email
+        }, function(user) {
+            console.log('password changed');
+            return cb();
+        }, function(err) {
+            return cb(err.data);
+        });
+    };
+
     res.removeUser = function(email, password, callback) {
         var cb = callback || angular.noop;
         User.delete({
@@ -327,8 +339,6 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
     }
 
     (function loginPageOnLoad($cookieStore){
-        console.log('load login');
-        console.log('value' + $scope.button_remember_me);
         if($scope.button_remember_me)
         {
             console.log('remember_me enabled');
@@ -398,6 +408,29 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
           'user_email': $scope.user.user_email,
           'user_name': $scope.user.user_name,
           'user_password': $scope.user.user_password
+        },
+        function(err) {
+          $scope.errors = {};
+
+          if (!err) {
+            //TODO: Redirect to a new page
+            $modalInstance.dismiss('cancel');
+            $location.path('/moments');
+            //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
+          } else {
+            angular.forEach(err.errors, function(error, field) {
+              console.log("field: " + field);
+              form[field].$setValidity('mongoose', false);
+              $scope.errors[field] = error.type;
+            });
+            $scope.error.other = err.message;
+          }
+        });
+    };
+
+    $scope.forgotpwd = function(form) {
+        Auth.rstPwd({
+          'user_email': $scope.user_email,
         },
         function(err) {
           $scope.errors = {};

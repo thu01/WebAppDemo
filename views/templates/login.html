@@ -131,20 +131,26 @@
                 </fieldset>
             </form>
 
-            <form role="form" ng-show="page_name=='forgotpwd-page'">
+            <form role="form"
+                  ng-submit="forgotpwd(form)"
+                  ng-show="page_name=='forgotpwd-page'">
                 <fieldset>
                     <h2>Please enter your email address</h2>
                     <hr class="colorgraph">
                     <div class="form-group">
-                        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address">
+                        <input type="email" 
+                               name="user_email"
+                               placeholder="Email Address" 
+                               class="form-control input-lg"
+                               ng-model="user_email"
+                               required
+                               autofocus
+                               />
                     </div>
                     <hr class="colorgraph">
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="submit" class="btn btn-lg btn-success btn-block" value="Reset">
-                        </div>
-                        <div class="col-md-4">
-                            <a href="" class="btn btn-lg btn-default btn-block" ng-click="btnSwitchPage(0)">Sign In</a>
+                            <input type="submit" class="btn btn-lg btn-success btn-block" value="Reset" ng-click="btnSwitchPage(0)">
                         </div>
                     </div>
                 </fieldset>

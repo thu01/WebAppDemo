@@ -39,10 +39,7 @@ module.exports = function(app, passport) {
     var users = require('./controllers/users');
     app.post('/auth/users', users.create);
     app.get('/auth/users/:userId', users.show);
-
-    // Emails
-    var emails = require('./controllers/emails');
-    app.post('/email', emails.send)
+    app.put('/auth/users', users.rstpwd);
 
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {

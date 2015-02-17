@@ -3,7 +3,8 @@
 var mongoose = require('mongoose'),
   User = mongoose.model('user_info'),
   passport = require('passport'),
-  ObjectId = mongoose.Types.ObjectId;
+  ObjectId = mongoose.Types.ObjectId,
+  emailer = require('../controllers/emails');
 
 /**
  * Create user
@@ -64,4 +65,37 @@ exports.exists = function (req, res, next) {
       res.json({exists: false});
     }
   });
+}
+
+/**
+ *  Reset User Password base on email address
+ *  requires: {email, password}
+ *  returns: {200}
+ */
+exports.rstpwd = function (req, res) {
+  console.log(req.body);
+  var user_email = req.body.user_email;
+  var user_password = 'admin123';
+  User.findOneAndUpdate(
+      { user_email : user_email },
+      { user_password: user_password},
+      function (err, user) {
+        if (err) {
+          return next(new Error('Failed to load User ' + user_email));
+        };
+
+        if(user) {
+            emailer.send({user_email: user_email, user_password: user_password},
+            function(err) {
+              if (err) {
+                console.log(err);
+                return res.json(400, err);
+              };
+              console.log('reset password success.');
+              res.status(200).json({exists: true});
+            });
+        } else {
+        res.json({exists: false});
+      };
+    });
 }
