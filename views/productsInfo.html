@@ -1,4 +1,4 @@
-<div class="container" ng-controller='productInfoCtrl'>
+<div class="container" ng-app="productsInfo" ng-controller='productInfoCtrl'>
     <table ng-table='ngTableProducts' class="table">
     <tr ng-repeat="info in $data">
         <td data-title="'Product Name'" header-class="text-left">{{info.product_name}}</td>

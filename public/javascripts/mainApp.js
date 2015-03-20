@@ -1,4 +1,14 @@
-var mainApp = angular.module('mainApp', ['ui.router', 'ngTable', 'ui.bootstrap', 'ngCookies', 'ngResource']);
+'use strict';
+
+var mainApp = angular.module('mainApp', [
+                                          'ui.router', 
+                                          'ngTable', 
+                                          'ui.bootstrap', 
+                                          'ngCookies', 
+                                          'ngResource',
+                                          'productsInfoApp',
+                                          'postsApp',
+]);
 
 mainApp.config([
   '$stateProvider',
@@ -6,7 +16,7 @@ mainApp.config([
   function($stateProvider, $urlRouterProvider) {
     $stateProvider
      .state('index',{
-      url: '/',
+      url: '/news',
       templateUrl: 'templates/news.html'
     })
     .state('products',{
@@ -19,15 +29,15 @@ mainApp.config([
         },
       controller: 'productInfoCtrl'
     })
-    .state('moments',{
-      url: '/moments',
-      templateUrl: 'moments.html',
+    .state('posts',{
+      url: '/posts',
+      templateUrl: 'posts.html',
       resolve: {
-        postPromise: ['posts', function(posts){
+        postPromise: ['postsFactory', function(posts){
           return posts.getAll();
         }]
         },
-      controller: 'momentsCtrl'
+      controller: 'postsCtrl'
     })
     .state('email',{
       url: '/email',
@@ -52,37 +62,6 @@ mainApp.run(['$rootScope', '$location', 'Auth',
             Auth.currentUser();
         }
     });
-}]);
-
-///Factories
-mainApp.factory('productsInfoFactory', ['$http', function($http){
-  var res = {
-    products: []
-  };
-  res.getProductsInfo = function() {
-    //console.log("http get products info");
-    return $http.get('/productsinfo').success(function(data){
-      angular.copy(data, res.products);
-    });
-  };
-  return res;
-}]);
-
-mainApp.factory('posts', ['$http', function($http){
-  var o = {
-    posts: []
-  };
-  o.getAll = function() {
-    return $http.get('/posts').success(function(data){
-      angular.copy(data, o.posts);
-    });
-  };
-  o.createPost = function(post) {
-  return $http.post('/posts', post).success(function(data){
-    o.posts.push(data);
-  });
-};
-  return o;
 }]);
 
 mainApp.factory('loginModalFactory', ['$modal','$log', function($modal, $log){
@@ -221,65 +200,6 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
         });
     };
     return res;
-}]);
-
-
-///Controllers
-//Controler for productInfo page
-mainApp.controller('productInfoCtrl',[
-'$scope',
-'ngTableParams',
-'productsInfoFactory',
-function($scope, ngTableParams, productsInfoFactory){
-  //console.log("productInfoCtrl");
-  //$scope.productsInfo = productsInfoFactory.products;
-  var data = productsInfoFactory.products;
-  console.log("Info: length($scope.productsInfo)= " + data.length);
-  $scope.ngTableProducts = new ngTableParams({
-        page: 1,            // show first page
-        count: 5           // count per page
-    }, {
-        total: data.length, // length of data
-        getData: function($defer, params) {
-            $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        }
-    });
-}]);
-
-//Controler for review page
-mainApp.controller('momentsCtrl',[
-'$scope',
-'posts',
-'$rootScope',
-function($scope, posts, $rootScope){
-	$scope.posts = posts.posts;
-    //TODO: Use session data for user name
-  $scope.addPost = function(){
-      if($scope.title === '') { return; }
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth()+1; //January is 0!
-      var yyyy = today.getFullYear();
-      var hour = today.getHours();
-      var minute = today.getMinutes();
-      var second = today.getSeconds();
-      if(dd<10) {
-        dd='0'+dd
-      }
-      if(mm<10) {
-        mm='0'+mm
-      }
-      posts.createPost({
-        post_author: (function () {
-            if ($rootScope.currentUser) {
-              return $rootScope.currentUser.user_name;
-            } else { return 'anonymous' }})(),
-        post_date: mm+'/'+dd+'/'+yyyy,
-        post_date_time: hour+':'+minute+':'+second,
-        post_content: $scope.title
-      });
-      location.reload();
-    };
 }]);
 
 mainApp.controller('HeaderCtrl', function ($scope, $modal, $log, $location, Auth) {
