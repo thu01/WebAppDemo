@@ -75,7 +75,8 @@ exports.exists = function (req, res, next) {
 exports.rstpwd = function (req, res) {
   console.log(req.body);
   var user_email = req.body.user_email;
-  var user_password = 'admin123';
+  // suggested way of generating password
+  var user_password = Math.random().toString(36).slice(-8);
   User.findOneAndUpdate(
       { user_email : user_email },
       { user_password: user_password},
