@@ -7,7 +7,8 @@ postsApp.controller('postsCtrl',[
 '$scope',
 'postsFactory',
 '$rootScope',
-function($scope, postsFactory, $rootScope){
+'$location',
+function($scope, postsFactory, $rootScope, $location){
 	$scope.posts = postsFactory.posts;
     //TODO: Use session data for user name
   $scope.addPost = function(){
@@ -34,7 +35,7 @@ function($scope, postsFactory, $rootScope){
         post_date_time: hour+':'+minute+':'+second,
         post_content: $scope.title
       });
-      location.reload();
+      $location.path();
     };
 }]);
 

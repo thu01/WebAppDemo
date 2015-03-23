@@ -17,7 +17,7 @@
 
 <div class="container">
     <h4 class="media-heading">Review</h4>
-    <div class="post-content col-md-8" ng-repeat="post in posts | orderBy: '-post_date'">
+    <div class="post-content col-md-8" ng-repeat="post in posts | orderBy: ['-post_date', '-post_date_time']">
         <div class="row">
             <div class="col-md-6"></div>
             <div class="text-right">{{post.post_author}}</div>

@@ -1,10 +1,10 @@
 'use strict';
 
 var mainApp = angular.module('mainApp', [
-                                          'ui.router', 
-                                          'ngTable', 
-                                          'ui.bootstrap', 
-                                          'ngCookies', 
+                                          'ui.router',
+                                          'ngTable',
+                                          'ui.bootstrap',
+                                          'ngCookies',
                                           'ngResource',
                                           'productsInfoApp',
                                           'postsApp',
@@ -54,7 +54,7 @@ mainApp.config([
     });
 
     $urlRouterProvider.otherwise('/news');
-  
+
 }]);
 
 mainApp.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
@@ -202,7 +202,7 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
         return cb(err.data);
     });
   };
-  
+
   return res;
 }]);
 
@@ -254,7 +254,7 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
       'email': $cookieStore.get('user_email'),
       'password': $cookieStore.get('user_password')
     };
-  } 
+  }
   else {
     $scope.user = {};
   }
@@ -299,7 +299,7 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
     };
     $scope.page_name = pageMapTable[pageKey];
   };
-    
+
   $scope.login = function(form) {
     Auth.login('password', {
       'email': $scope.user.email,
@@ -312,7 +312,7 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
         $modalInstance.dismiss('cancel');
         $location.path('/moments');
         //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
-      } 
+      }
       else {
           angular.forEach(err.errors, function(error, field) {
           form[field].$setValidity('mongoose', false);
@@ -338,7 +338,7 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
         $modalInstance.dismiss('cancel');
         $location.path('/moments');
         //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
-      } 
+      }
       else {
         angular.forEach(err.errors, function(error, field) {
           console.log("field: " + field);
@@ -362,7 +362,7 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
         $modalInstance.dismiss('cancel');
         $location.path('/moments');
         //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
-      } 
+      }
       else {
         angular.forEach(err.errors, function(error, field) {
           console.log("field: " + field);
