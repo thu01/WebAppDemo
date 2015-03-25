@@ -1,6 +1,9 @@
 'use strict';
 
-var postsApp = angular.module('postsApp', ['ui.router']);
+var postsApp = angular.module('postsApp', [
+                                            'ui.router',
+                                            'angularUtils.directives.dirPagination',
+]);
 
 //Controler for review page
 postsApp.controller('postsCtrl',[
