@@ -28,7 +28,12 @@ module.exports = function(app, passport) {
     		res.json(products_info);
   		});
 	});
-    
+
+  var email = require('./controllers/emails');
+  app.post('/email/contact', email.contact, function(err, data){
+    console.log("send email success");
+  });
+
     var auth = require('../config/auth');
     var session = require('./controllers/session');
     app.get('/auth/session', auth.ensureAuthenticated, session.session);
