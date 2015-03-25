@@ -71,3 +71,23 @@ footer {
     color: #428BCA;
     //border-color: transparent;
 }
+
+.mt_5 { 
+    margin-top:5px; 
+}
+.mt_10 { 
+    margin-top:10px; 
+}
+.mt_15 { 
+    margin-top:15px; 
+}
+.mt_20 { 
+    margin-top:20px; 
+}
+.mt_25 { 
+    margin-top:25px; 
+}
+.mt_30 { 
+    margin-top:30px; 
+}
+
