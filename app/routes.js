@@ -29,17 +29,17 @@ module.exports = function(app, passport) {
   		});
 	});
     
-    var auth = require('../config/auth');
-    var session = require('./controllers/session');
-    app.get('/auth/session', auth.ensureAuthenticated, session.session);
-    app.post('/auth/session', session.login);
-    app.del('/auth/session', session.logout);
+  var auth = require('../config/auth');
+  var session = require('./controllers/session');
+  app.get('/auth/session', auth.ensureAuthenticated, session.session);
+  app.post('/auth/session', session.login);
+  app.del('/auth/session', session.logout);
 
-    // User Routes
-    var users = require('./controllers/users');
-    app.post('/auth/users', users.create);
-    app.get('/auth/users/:userId', users.show);
-    app.put('/auth/users', users.rstpwd);
+  // User Routes
+  var users = require('./controllers/users');
+  app.post('/auth/users', users.create);
+  app.get('/auth/users/:userId', users.show);
+  app.put('/auth/users', users.rstpwd);
 
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {
