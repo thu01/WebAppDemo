@@ -8,7 +8,8 @@ postsApp.controller('postsCtrl',[
 'postsFactory',
 '$rootScope',
 '$state',
-function($scope, postsFactory, $rootScope, $state){
+'$filter',
+function($scope, postsFactory, $rootScope, $state, $filter){
   $scope.posts = postsFactory.posts;
 
   $scope.addPost = function()
@@ -18,20 +19,8 @@ function($scope, postsFactory, $rootScope, $state){
       return; 
     }
     var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    var hour = today.getHours();
-    var minute = today.getMinutes();
-    var second = today.getSeconds();
-    if(dd<10)
-    {
-      dd='0'+dd;
-    }
-    if(mm<10) 
-    {
-      mm='0'+mm;
-    }
+    var postDate = $filter('date')(today, 'MM/dd/yyyy');
+    var postTime = $filter('date')(today, 'mediumTime');
     postsFactory.createPost({
       post_author: (function () {
         if ($rootScope.currentUser) 
@@ -43,10 +32,11 @@ function($scope, postsFactory, $rootScope, $state){
           return 'anonymous'; 
         }
       })(),
-      post_date: mm+'/'+dd+'/'+yyyy,
-      post_date_time: hour+':'+minute+':'+second,
+      post_date: postDate,
+      post_date_time: postTime,
       post_content: $scope.title
       });
+    //Reload current page
     $state.go($state.current, {}, {reload: true});
   };
 }]);
