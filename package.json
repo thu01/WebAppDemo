@@ -1,5 +1,12 @@
 {
-  "name": "webAppDemo",
+  "author": "Tianyang Hu <tianyang.hu01@gmail.com>",
+  "name": "WebAppDemo",
+  "description": "Small retail business web application",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thu01/WebAppDemo"
+  },
   "main": "server.js",
   "dependencies": {
     "express": "~4.0.0",
@@ -15,7 +22,8 @@
     "method-override": "~1.0.0",
     "express-session": "~1.0.0",
     "nodemailer": "~1.3.1",
-    "nodemailer-mailgun-transport": "~1.0.0"
+    "nodemailer-mailgun-transport": "~1.0.0",
+    "mongo-express": "latest"
   },
   "devDependencies": {
     "jasmine-core": "^2.2.0",
