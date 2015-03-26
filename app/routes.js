@@ -28,7 +28,13 @@ module.exports = function(app, passport) {
     		res.json(products_info);
   		});
 	});
-    
+
+
+  var email = require('./controllers/emails');
+  app.post('/email/contact', email.contact, function(err, data){
+    console.log("send email success");
+  });
+
   var auth = require('../config/auth');
   var session = require('./controllers/session');
   app.get('/auth/session', auth.ensureAuthenticated, session.session);
@@ -40,6 +46,7 @@ module.exports = function(app, passport) {
   app.post('/auth/users', users.create);
   app.get('/auth/users/:userId', users.show);
   app.put('/auth/users', users.rstpwd);
+
 
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {
