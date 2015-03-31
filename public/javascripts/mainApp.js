@@ -37,12 +37,6 @@ mainApp.config([
     .state('posts',{
       url: '/posts',
       templateUrl: 'posts.html',
-      resolve: {
-        postPromise: ['postsFactory', function(posts){
-          return posts.getAll();
-        }]
-      },
-      controller: 'postsCtrl'
     })
     .state('email',{
       url: '/email',
@@ -59,7 +53,6 @@ mainApp.config([
     });
 
     $urlRouterProvider.otherwise('/news');
-
 }]);
 
 mainApp.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {

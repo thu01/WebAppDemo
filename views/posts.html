@@ -20,10 +20,11 @@
         <div class="clearfix"></div>
         <h3 class="col-xs-6 col-md-4 mt_25">Review</h4>
         <div class="col-xs-6 col-md-4 text-right">
-            <dir-pagination-controls template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html">
+            </dir-pagination-controls>
         </div>
     </div>
-    <div class="post-content col-md-8" dir-paginate="post in posts | itemsPerPage: 10">
+    <div class="post-content col-md-8" dir-paginate="post in posts | itemsPerPage: postsPerPage" total-items="totalPosts">
         <div class="row">
             <div class="col-md-6"></div>
             <div class="text-right">{{post.post_author}}</div>

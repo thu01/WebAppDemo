@@ -7,5 +7,4 @@ var postSchema = new mongoose.Schema({
 	post_content: String
 });
 
-
 module.exports = mongoose.model('posts', postSchema);

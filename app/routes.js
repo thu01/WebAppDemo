@@ -1,24 +1,35 @@
 //var mongoose = require('mongoose');
-var Post = require('./models/posts');
+var mdPost = require('./models/posts');
 var Products_info = require('./models/productsInfo');
 
 module.exports = function(app, passport) {
 
 // normal routes ===============================================================
-	app.get('/posts',function(req,res){
-		Post.find({}).sort({post_date:-1, post_date_time:-1}).exec(function(err, posts){
+	app.post('/wsGetPosts',function(req,res){
+    var pageNumber = req.body.Page;
+    var postsPerPage = req.body.PostsPerPage;
+		mdPost.find().sort({_id:-1}).skip((pageNumber-1)*postsPerPage).limit(postsPerPage).exec(function(err, posts){
     		if(err){ return next(err); }
     		res.json(posts);
   		});
 	});
 
-	app.post('/posts', function(req, res, next) {
+	app.post('/wsCreatePost', function(req, res, next) {
   		var post = new Post(req.body);
-  		post.save(function(err, post){
+  		mdPost.save(function(err, post){
     		if(err){ return next(err); }
     	res.json(post);
   		});
 	});
+
+  app.get('/wsGetPostsCount', function(req, res, next) {
+    mdPost.count({},function(err, postsCount){
+      if(err){
+        return next(err);
+      }
+      res.json(postsCount);
+    });
+  });
 
 	app.get('/productsinfo',function(req,res){
 		console.log("/productsinfo");
@@ -28,7 +39,6 @@ module.exports = function(app, passport) {
     		res.json(products_info);
   		});
 	});
-
 
   var email = require('./controllers/emails');
   app.post('/email/contact', email.contact, function(err, data){
@@ -47,12 +57,16 @@ module.exports = function(app, passport) {
   app.get('/auth/users/:userId', users.show);
   app.put('/auth/users', users.rstpwd);
 
-
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
 	});
+
+  //Defaul routing
+  app.all('*', function(req, res, next){
+    res.redirect('/');
+  });
 };
 
 // route middleware to ensure user is logged in
