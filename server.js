@@ -32,8 +32,9 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views')));
+//Served static files
+app.use(express.static('public'));
+app.use(express.static('views'));
 
 // required for passport
 app.use(session({ secret: 'WebAppDemo' })); // session secret

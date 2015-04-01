@@ -15,11 +15,13 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/wsCreatePost', function(req, res, next) {
-  		var post = new Post(req.body);
-  		mdPost.save(function(err, post){
-    		if(err){ return next(err); }
-    	res.json(post);
-  		});
+    var newPost = new mdPost(req.body);
+    newPost.save(function(err, newPost){
+      if(err){ 
+        return next(err); 
+      }
+    	res.json(newPost);
+  	});
 	});
 
   app.get('/wsGetPostsCount', function(req, res, next) {
