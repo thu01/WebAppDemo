@@ -1,11 +1,17 @@
-<div class="container" ng-app="productsInfo" ng-controller='productInfoCtrl'>
-    <table ng-table='ngTableProducts' class="table">
-    <tr ng-repeat="info in $data">
-        <td data-title="'Product Name'" header-class="text-left">{{info.product_name}}</td>
-        <td data-title="'Price'" header-class="text-left">{{info.product_price}}</td>
-        <td data-title="'Type'" header-class="text-left">{{info.product_type}}</td>
-        <td data-title="'Description'" header-class="text-left">{{info.product_description}}</td>
+<link rel="stylesheet" type="text/css" href="stylesheets/global.css" />
+<div ng-app="productsInfoApp" ng-controller="productInfoCtrl">
+<div class="container">
+    <table class="table">
+    <tr dir-paginate="product in products | itemsPerPage: productsPerPage" pagination-id="productsPagination">
+        <td data-title="'Product Name'" header-class="text-left">{{product.product_name}}</td>
+        <td data-title="'Price'" header-class="text-left">{{product.product_price}}</td>
+        <td data-title="'Type'" header-class="text-left">{{product.product_type}}</td>
+        <td data-title="'Description'" header-class="text-left">{{product.product_description}}</td>
     </tr>
     </table>
+    <div class="col-xs-6 col-md-4 text-right mt_30">
+    <dir-pagination-controls pagination-id="productsPagination" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+	</div>
+</div>
 </div>
 

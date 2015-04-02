@@ -1,39 +1,37 @@
 'use strict';
 
 ///Controllers
-var productsInfoApp = angular.module('productsInfoApp', ['ngTable']);
+var productsInfoApp = angular.module('productsInfoApp', ['angularUtils.directives.dirPagination']);
 
 productsInfoApp.controller('productInfoCtrl',[
 '$scope',
-'ngTableParams',
 'productsInfoFactory',
-function($scope, ngTableParams, productsInfoFactory){
-  //console.log("productInfoCtrl");
-  //$scope.productsInfo = productsInfoFactory.products;
-  var data = productsInfoFactory.products;
-  console.log("Info: length($scope.productsInfo)= " + data.length);
-  $scope.ngTableProducts = new ngTableParams({
-        page: 1,            // show first page
-        count: 5           // count per page
-    }, {
-        total: data.length, // length of data
-        getData: function($defer, params) {
-            $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        }
+function($scope, productsInfoFactory){
+  $scope.products = [];
+  //Pagination Display depends on both $scope.products and total items
+  //$scope.totalProducts = 58;
+  $scope.productsPerPage = 15;
+  getProducts(1, $scope.productsPerPage);
+
+  $scope.pagination = {
+    current: 1
+  };
+
+  function getProducts(pageNumber, productsPerPage) {
+    productsInfoFactory.getProductsInfo().then(function(response){
+      console.log(response.data);
+      //angular.copy(response.data, $scope.products);
+      $scope.products = response.data;
     });
+  };
 }]);
 
 ///Factories
 productsInfoApp.factory('productsInfoFactory', ['$http', function($http){
-  var res = {
-    products: []
+  var productsFactory = {};
+  productsFactory.getProductsInfo = function() {
+    return $http.get('/wsGetProductsInfo');
   };
-  res.getProductsInfo = function() {
-    //console.log("http get products info");
-    return $http.get('/productsinfo').success(function(data){
-      angular.copy(data, res.products);
-    });
-  };
-  return res;
+  return productsFactory;
 }]);
 

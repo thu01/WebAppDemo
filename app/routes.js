@@ -1,6 +1,6 @@
 //var mongoose = require('mongoose');
 var mdPost = require('./models/posts');
-var Products_info = require('./models/productsInfo');
+var mdProduct = require('./models/productsInfo');
 
 module.exports = function(app, passport) {
 
@@ -33,11 +33,12 @@ module.exports = function(app, passport) {
     });
   });
 
-	app.get('/productsinfo',function(req,res){
-		console.log("/productsinfo");
-		Products_info.find(function(err, products_info){
-    		if(err){ return next(err); }
-    		//console.log(products_info);
+	app.get('/wsGetProductsInfo',function(req,res){
+		console.log("/wsGetProductsInfo");
+		mdProduct.find().exec(function(err, products_info){
+    		if(err){ 
+          return next(err); 
+        }
     		res.json(products_info);
   		});
 	});

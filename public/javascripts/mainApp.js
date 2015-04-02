@@ -2,7 +2,6 @@
 
 var mainApp = angular.module('mainApp', [
                                           'ui.router',
-                                          'ngTable',
                                           'ui.bootstrap',
                                           'ngCookies',
                                           'ngResource',
@@ -27,12 +26,6 @@ mainApp.config([
     .state('products',{
       url: '/products',
       templateUrl: 'productsInfo.html',
-      resolve: {
-        postPromise: ['productsInfoFactory', function(productsInfoFactory){
-          return productsInfoFactory.getProductsInfo();
-        }]
-      },
-      controller: 'productInfoCtrl'
     })
     .state('posts',{
       url: '/posts',

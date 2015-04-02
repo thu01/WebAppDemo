@@ -24,8 +24,8 @@ function($scope, postsFactory, $rootScope, $state, $filter){
   };
 
   $scope.pageChanged = function(newPage) {
-        getPosts(newPage, $scope.postsPerPage);
-      };
+    getPosts(newPage, $scope.postsPerPage);
+  };
 
   function getPosts(pageNumber, postsPerPage) {
     postsFactory.getPostsCount().then(function(response){
@@ -62,8 +62,8 @@ function($scope, postsFactory, $rootScope, $state, $filter){
 }]);
 
 postsApp.factory('postsFactory', ['$http', function($http){
-  var factory = {};
-  factory.getPostsPerPage = function(pageNumber, postsPerPage){
+  var postFactory = {};
+  postFactory.getPostsPerPage = function(pageNumber, postsPerPage){
     var postData = {
       "Page": pageNumber,
       "PostsPerPage": postsPerPage
@@ -71,12 +71,12 @@ postsApp.factory('postsFactory', ['$http', function($http){
     return $http.post('/wsGetPosts', postData);
   };
 
-  factory.getPostsCount = function(){
+  postFactory.getPostsCount = function(){
     return $http.get('/wsGetPostsCount');
   }
 
-  factory.createPost = function(post) {
+  postFactory.createPost = function(post) {
     return $http.post('/wsCreatePost', post);
   };
-  return factory;
+  return postFactory;
 }]);
