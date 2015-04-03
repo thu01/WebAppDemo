@@ -10,31 +10,29 @@ var passport = require('passport');
 var flash    = require('connect-flash');
 var path	 = require('path');
 
-var morgan       = require('morgan');
+var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
+// pass passport for configuration
+require('./config/passport')(passport);
+
+// connect to our database
 var configDB = require('./config/database.js');
+mongoose.connect(configDB.url);
 
-// configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
-
-require('./config/passport')(passport); // pass passport for configuration
-
-// set up our express application
-app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser.json()); // get information from html forms
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.set('view engine', 'ejs'); // set up ejs for templating
 app.set('views', __dirname + '/views');
+//app.set('view engine', 'ejs'); // set up ejs for templating
 app.engine('html', require('ejs').renderFile);
 
-//Served static files
-app.use(express.static('public'));
-app.use(express.static('views'));
+// log every request to the console
+app.use(logger('dev')); 
+// get information from html forms
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
+// read cookies (needed for auth)
+app.use(cookieParser()); 
 
 // required for passport
 app.use(session({ secret: 'WebAppDemo' })); // session secret
@@ -42,8 +40,12 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-// routes ======================================================================
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+//Served static files
+app.use(express.static('public'));
+app.use(express.static('views'));
+
+var routes  = require('./app/routes.js')(app, passport); 
+app.use('/', routes);
 
 // launch ======================================================================
 app.listen(port, function(){

@@ -18,7 +18,12 @@ mainApp.config([
       enabled: true,
       requireBase: false
     });
+
     $stateProvider
+    .state('default',{
+      url: '/',
+      templateUrl: 'templates/news.html'
+    })
     .state('news',{
       url: '/news',
       templateUrl: 'templates/news.html'
