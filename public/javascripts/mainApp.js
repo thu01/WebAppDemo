@@ -371,32 +371,6 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
   };
 }]);
 
-mainApp.controller('contactCtrl', [
-'$scope',
-'$rootScope',
-'$http',
-'$location',
-function($scope, $rootScope, $http, $location){
-
-    $scope.submitContact = function() {
-      var user;
-      if ($rootScope.currentUser == null) {
-        user = null;
-      } else {
-        user = $rootScope.currentUser.user_name;
-      }
-        var req = {
-            'user': user,
-            'date': new Date(),
-            'fname': $scope.fname,
-            'lname': $scope.lname,
-            'phone': $scope.phone,
-            'msg': $scope.message
-        }
-        return $http.post('/email/contact', req);
-    };
-}]);
-
 //Directives
 /**
  * Removes server error when user updates input

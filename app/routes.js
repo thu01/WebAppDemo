@@ -6,7 +6,7 @@ var router = express.Router();
 
 module.exports = function(app, passport) {
 
-  router.get('/:type(news|posts|products)', function(req, res) {
+  router.get('/:type(news|posts|products|contact)', function(req, res) {
     res.render('index.html');
   });
   
