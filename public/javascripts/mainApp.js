@@ -7,6 +7,7 @@ var mainApp = angular.module('mainApp', [
                                           'ngResource',
                                           'productsInfoApp',
                                           'postsApp',
+                                          'contactApp'
 ]);
 
 mainApp.config([
