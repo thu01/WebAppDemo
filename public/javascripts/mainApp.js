@@ -66,29 +66,6 @@ mainApp.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location,
   });
 }]);
 
-mainApp.factory('loginModalFactory', ['$modal','$log', function($modal, $log){
-  var res = {
-    o: []
-  };
-  res.openModal = function() {
-    var modalInstance = $modal.open({
-      templateUrl: 'templates/login.html',
-      controller: 'ModalInstanceCtrl',
-      size: 3,
-      resolve: {
-        items: function () {
-        return 3;
-        }
-      }
-    });
-    modalInstance.result.then(function(){
-      console.log("loginModalFactory");
-      $log.info('Modal dismissed at: ' + new Date());
-    });
-  };
-  return res;
-}]);
-
 mainApp.factory('Session', ['$resource', function ($resource) {
   return $resource('/auth/session/');
 }]);
@@ -108,7 +85,7 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
 
   res.login = function(provider, user, callback) {
     var cb = callback || angular.noop;
-    // console.log(user);
+    //console.log(user);
     var userInputs = user;
     Session.save({
       provider: provider,
@@ -147,6 +124,7 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
     console.log("Auth Create User: userinfo = " + angular.toJson(userinfo));
     User.save(userinfo,
       function(user) {
+      console.log(userinfo);
       $rootScope.currentUser = user;
         return cb();
       }, function(err) {
@@ -203,7 +181,13 @@ mainApp.factory('Auth', ['$location', '$rootScope', 'Session', 'User', '$cookieS
   return res;
 }]);
 
-mainApp.controller('HeaderCtrl', function ($scope, $modal, $log, $location, Auth) {
+mainApp.controller('HeaderCtrl',[
+'$scope', 
+'$modal', 
+'$log', 
+'$location', 
+'Auth',
+function ($scope, $modal, $log, $location, Auth) {
   $scope.buttonLoginClick = function (size) {
   var modalInstance = $modal.open({
     templateUrl: 'templates/login.html',
@@ -219,6 +203,7 @@ mainApp.controller('HeaderCtrl', function ($scope, $modal, $log, $location, Auth
 
   modalInstance.result.then(function (selectedItem) {
     $scope.selected = selectedItem;
+    console.log('selected:' + selectedItem);
   }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -231,7 +216,7 @@ mainApp.controller('HeaderCtrl', function ($scope, $modal, $log, $location, Auth
       }
     });
   };
-});
+}]);
 
 mainApp.controller('loginCtrl', [
 '$scope',
@@ -307,7 +292,7 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
       $scope.errors = {};
       if (!err) {
         $modalInstance.dismiss('cancel');
-        $location.path('/moments');
+        $location.path('/post');
         //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
       }
       else {
@@ -323,9 +308,9 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
   $scope.signup = function(form) {
     //console.log("Auth signup");
     Auth.createUser({
-      'user_email': $scope.user.user_email,
-      'user_name': $scope.user.user_name,
-      'user_password': $scope.user.user_password
+      'email': $scope.user.signupEmail,
+      'username': $scope.user.signupUserName,
+      'password': $scope.user.signupPassword
     },
     function(err) {
       $scope.errors = {};
@@ -333,12 +318,11 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
       if (!err) {
         //TODO: Redirect to a new page
         $modalInstance.dismiss('cancel');
-        $location.path('/moments');
+        $location.path('/posts');
         //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
       }
       else {
         angular.forEach(err.errors, function(error, field) {
-          console.log("field: " + field);
           form[field].$setValidity('mongoose', false);
           $scope.errors[field] = error.type;
         });
@@ -357,12 +341,12 @@ function($scope, $modalInstance, Auth, $location, $cookieStore){
       if (!err) {
         //TODO: Redirect to a new page
         $modalInstance.dismiss('cancel');
-        $location.path('/moments');
+        $location.path('/posts');
         //console.log( $scope.user.email + "!\n!" +  $scope.user.password);
       }
       else {
         angular.forEach(err.errors, function(error, field) {
-          console.log("field: " + field);
+          console.log("form: " + JSON.stringify(field));
           form[field].$setValidity('mongoose', false);
           $scope.errors[field] = error.type;
         });

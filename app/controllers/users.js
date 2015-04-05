@@ -14,17 +14,22 @@ var mongoose = require('mongoose'),
 exports.create = function (req, res, next) {
   console.log("Users; req = " + req.body);
   console.dir(req.body);
-  var newUser = new User(req.body);
+  var userinfo = {
+    "user_email": req.body.email,
+    "user_name": req.body.username,
+    "user_password": req.body.password
+  };
+  var newUser = new User(userinfo);
   newUser.provider = 'local';
 
   newUser.save(function(err) {
     if (err) {
       return res.json(400, err);
     }
-
     req.logIn(newUser, function(err) {
       if (err) return next(err);
-      return res.json(newUser.user_info);
+      //console.log(newUser);
+      return res.json(newUser.user_profile);
     });
   });
 };

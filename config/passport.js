@@ -27,42 +27,7 @@ module.exports = function(passport) {
         });
     });
 
-    // =========================================================================
-    // LOCAL LOGIN =============================================================
-    // =========================================================================
-    passport.use('local-login', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-    },
-    function(req, email, password, done) {
-        if (email)
-            email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
-
-        // asynchronous
-        process.nextTick(function() {
-            User.findOne({ 'user_email' :  email }, function(err, user) {
-                // if there are any errors, return the error
-                if (err)
-                    return done(err);
-
-                // if no user is found, return the message
-                if (!user)
-                    return done(null, false, req.flash('loginMessage', 'No user found.' + email));
-
-                if (!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-
-                // all is well, return user
-                else
-                    return done(null, user);
-            });
-        });
-
-    }));
-
-// Use local strategy
+    // Use local strategy
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password'
@@ -102,7 +67,7 @@ module.exports = function(passport) {
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
-        nicknameField : 'nickname',
+        nicknameField : 'username',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
     function(req, email, password, done) {
@@ -132,7 +97,7 @@ module.exports = function(passport) {
                         //TODO:
                         //newUser.local.password = newUser.generateHash(password);
                         newUser.user_password = password;
-                        newUser.user_nickname = req.param("nickname");
+                        newUser.user_nickname = req.param("username");
                         newUser.user_url = "";
                         newUser.user_registered_time = "";
                         newUser.user_activation_key="";
@@ -161,7 +126,7 @@ module.exports = function(passport) {
                         var user = req.user;
                         user.user_email = email;                        
                         user.user_password = password;
-                        user.user_nickname = req.params("nickname");
+                        user.user_nickname = req.params("username");
                         user.user_url = "";
                         user.user_registered_time = "";
                         user.user_activation_key="";
