@@ -71,6 +71,7 @@
                    class="form-control input-lg"
                    required
                    autofocus
+                   on-focus
                    mongoose-error />
             <p class="help-block" ng-show="signupForm.signupEmail.$error.email && !signupForm.signupEmail.$focused">
               Not a valid email.
@@ -139,6 +140,7 @@
                placeholder="Email Address" 
                class="form-control input-lg"
                required
+               on-focus
                autofocus
                />
           </div>
