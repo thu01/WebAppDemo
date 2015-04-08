@@ -1,0 +1,61 @@
+section.logo{
+	padding-top: 70px;
+	padding-bottom: 70px;
+	background-color: #f2f2f2;
+}
+
+section.slider{
+    color: #f2f2f2;
+    background: #4b8c6e;
+    padding: 40px 0;
+}
+
+section.slider h2{
+    margin-bottom: 20px;
+}
+
+section.slider .col-md-8{
+    padding-left: 30px;
+}
+
+.inner-page{
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+}
+
+section.contact{
+    background: #f5f5f5 url(/images/map-background.png);
+    min-height: 400px;
+    background-size:auto 100%;
+    padding-top: 30px;
+}
+
+section.contact ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+section.contact li{
+    line-height: 2;
+}
+
+.c_green{
+	color: #8cc83c;
+}
+
+.c_darkgreen{
+	color: #4b8c6e;
+}
+
+.c_blue{
+	color: #4bbee6;
+}
+
+.c_brown{
+	color: #42210b;
+}
+
+.slide_caption {
+  width: 100%;
+}
