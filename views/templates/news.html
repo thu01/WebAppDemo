@@ -1,76 +1,56 @@
-<!-- Page Content -->
-<div class="container">
-    <!-- Jumbotron Header -->
-    <header class="jumbotron key-content">
-        <h1>A Warm Welcome!</h1>
-        <p>Website Key Content Placeholder, best resource for fun.</p>
-        <p><a class="btn btn-primary btn-large">Call to action!</a>
-        </p>
-    </header>
+<!DOCTYPE HTML>
+<link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css">
+<link rel="stylesheet" href="bower_components/slick-carousel/slick/slick-theme.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/global.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/news.css" />
 
-    <hr>
 
-    <!-- Title -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h3>Latest Features</h3>
-        </div>
+<section class="logo">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+                <img class="img-responsive center-block" ng-src="/images/logo.png" alt="Logo">
+                <h1 class="text-center c_brown">Web Application Demo</h1>
+                <p class="text-center c_brown">This is a nodejs web application demo</p>
+            </div><!-- /col-lg-8 -->
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</section>
+
+<section class="slider">
+    <div class="inner-page">
+        <h2 class="page-headline large text-center">Tell your projects awesome story.</h2>
+        <p class="text-center">Our Products</p>
     </div>
-    <!-- /.row -->
-
-    <!-- Page Features -->
-    <div class="row text-center">
-
-        <div class="col-md-3 col-sm-6 feature-content">
-            <div class="thumbnail">
-                <img src="http://placehold.it/800x500" alt="">
-                <div class="caption">
-                    <h3>Feature Label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 feature-content">
-            <div class="thumbnail">
-                <img src="http://placehold.it/800x500" alt="">
-                <div class="caption">
-                    <h3>Feature Label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 feature-content">
-            <div class="thumbnail">
-                <img src="http://placehold.it/800x500" alt="">
-                <div class="caption">
-                    <h3>Feature Label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 feature-content">
-            <div class="thumbnail">
-                <img src="http://placehold.it/800x500" alt="">
-                <div class="caption">
-                    <h3>Feature Label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                    </p>
-                </div>
+    <div class="container mt_0">
+        <div ng-controller="newsCtrl">
+            <div>
+                <slick infinite=true slides-to-show=1 slides-to-scroll=1>
+                    <div ng-repeat="slide in slides" class="img-responsive center-block">
+                        <img ng-src="{{slide.image}}" class="img-responsive center-block">
+                        <div class="slide_caption text-center">{{slide.text}}</div>
+                    </div>          
+                </slick>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="short"><strong>About Us</strong></h2>
+                <h4><strong>Company</strong></h4>
+                <ul class="unstyled">
+                    <li><i class="icon-map-marker"></i> <strong>Address:</strong> 1234 Street Name, City Name, United
+                        States
+                    </li>
+                    <li><i class="icon-phone"></i> <strong>Phone:</strong> (123) 456-7890</li>
+                    <li><i class="icon-envelope"></i> <strong>Email:</strong> <a class="c_green href="mailto:mail@example.com">mail@example.com</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

@@ -5,6 +5,7 @@ var mainApp = angular.module('mainApp', [
                                           'ui.bootstrap',
                                           'ngCookies',
                                           'ngResource',
+                                          'slick',
                                           'productsInfoApp',
                                           'postsApp',
                                           'contactApp'
@@ -65,6 +66,31 @@ mainApp.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location,
     }
   });
 }]);
+
+mainApp.controller('newsCtrl', function ($scope) {
+  $scope.newsSlideInterval = 5000;
+  var SLIDE_COUNT = 3;
+  var slidesText = [
+  "description1", 
+  "description2", 
+  "description3"
+  ];
+  var slidesImg = [
+  "/images/image1.jpg",
+  "/images/image2.jpg",
+  "/images/image3.jpg"
+  ];
+  var slides = $scope.slides = [];
+  $scope.addSlide = function(index) {
+    slides.push({
+      image: slidesImg[index],
+      text: slidesText[index],
+    });
+  };
+  for (var i=0; i<SLIDE_COUNT; i++) {
+    $scope.addSlide(i);
+  }
+});
 
 mainApp.factory('Session', ['$resource', function ($resource) {
   return $resource('/auth/session/');
