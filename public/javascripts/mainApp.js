@@ -28,7 +28,7 @@ mainApp.config([
     })
     .state('news',{
       url: '/news',
-      templateUrl: 'templates/news.html'
+      templateUrl: 'news.html'
     })
     .state('products',{
       url: '/products',
