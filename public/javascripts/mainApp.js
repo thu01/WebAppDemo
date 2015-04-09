@@ -24,7 +24,7 @@ mainApp.config([
     $stateProvider
     .state('default',{
       url: '/',
-      templateUrl: 'templates/news.html'
+      templateUrl: 'news.html'
     })
     .state('news',{
       url: '/news',
