@@ -1,22 +1,21 @@
 <!DOCTYPE HTML>
 <link rel="stylesheet" type="text/css" href="stylesheets/global.css" />
-<div ng-app="contactApp" ng-controller='contactCtrl'>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 centered">
-            <img src="images/logo3.jpg" alt="Company">
-            <h1>About Company name</h1>
-            <p>
-                Company: xxxxx
-            </p>
-            <p>
-                Address: 000 xxxx xxxxx, xxx xxxx, xx, 00000, United States
-            </p>
-            <p>
-                Phone: (000)000-0000
-            </p>
-            <button class="btn btn-info" ng-click="sendMail()">Send</button>
-        </div><!-- /col-lg-8 -->
-    </div><!-- /row -->
-</div> <!-- /container -->
-</div>
+<link rel="stylesheet" type="text/css" href="stylesheets/contact.css" />
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="short"><strong>About Us</strong></h2>
+                <h4><strong>Company</strong></h4>
+                <ul class="unstyled">
+                    <li><i class="icon-map-marker"></i> <strong>Address:</strong> 1234 Street Name, City Name, United
+                        States
+                    </li>
+                    <li><i class="icon-phone"></i> <strong>Phone:</strong> (123) 456-7890</li>
+                    <li><i class="icon-envelope"></i> <strong>Email:</strong> <a class="c_green" href="mailto:mail@example.com">mail@example.com</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

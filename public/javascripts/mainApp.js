@@ -69,16 +69,20 @@ mainApp.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location,
 
 mainApp.controller('newsCtrl', function ($scope) {
   $scope.newsSlideInterval = 5000;
-  var SLIDE_COUNT = 3;
+  var SLIDE_COUNT = 5;
   var slidesText = [
   "description1", 
   "description2", 
-  "description3"
+  "description3",
+  "description4",
+  "description5"
   ];
   var slidesImg = [
   "/images/image1.jpg",
   "/images/image2.jpg",
-  "/images/image3.jpg"
+  "/images/image3.jpg",
+  "/images/image4.jpg",
+  "/images/image5.jpg"
   ];
   var slides = $scope.slides = [];
   $scope.addSlide = function(index) {
